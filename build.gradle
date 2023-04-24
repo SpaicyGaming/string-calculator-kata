@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+}
+
+group 'me.michelecoco.stringcalculatorkata'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'me.michelecoco.stringcalculatorkata.StringCalculator'
+    }
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    // reports in $buildDir/reports/jacoco
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams true
+        events "passed", "skipped", "failed"
+//        exceptionFormat 'full'
+    }
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
